@@ -1,0 +1,14 @@
+CREATE TYPE user_role AS ENUM ('USER', 'ADMIN');
+CREATE TYPE user_status AS ENUM ('ACTIVE', 'INACTIVE', 'BLOCKED');
+
+CREATE TABLE tb_user (
+    user_id SERIAL PRIMARY KEY,
+    user_name VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    CPF VARCHAR(11) NOT NULL UNIQUE,
+    role user_role NOT NULL DEFAULT 'USER',
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    status user_status NOT NULL DEFAULT 'ACTIVE'
+);
