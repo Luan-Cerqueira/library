@@ -1,6 +1,6 @@
 CREATE TABLE tb_publisher (
     publisher_id SERIAL PRIMARY KEY,
-    name VARCHAR(120) NOT NULL UNIQUE,
+    publisher_name VARCHAR(120) NOT NULL UNIQUE,
     country VARCHAR(60)
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE tb_book (
 
 CREATE TABLE tb_author (
     author_id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    author_name VARCHAR(255) NOT NULL,
     nacionality VARCHAR(100) NOT NULL
 );
 
