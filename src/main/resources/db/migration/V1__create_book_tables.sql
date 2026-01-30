@@ -19,7 +19,7 @@ CREATE TABLE tb_book (
 
 CREATE TABLE tb_author (
     author_id SERIAL PRIMARY KEY,
-    author_name VARCHAR(255) NOT NULL,
+    author_name VARCHAR(255) NOT NULL UNIQUE,
     nacionality VARCHAR(100) NOT NULL
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE book_author (
 
 CREATE TABLE tb_genre (
     genre_id SERIAL PRIMARY KEY,
-    genre_name VARCHAR(20) NOT NULL
+    genre_name VARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE book_genre (

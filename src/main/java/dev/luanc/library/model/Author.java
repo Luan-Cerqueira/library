@@ -15,8 +15,13 @@ public class Author {
 
     @Id
     @Column(name = "author_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "author_name", nullable = false, unique = true)
     private String name;
+
+    @Column(name = "nacionality", nullable = false, length = 100)
     private String nacionality;
 
     @ManyToMany(mappedBy = "authors", cascade = CascadeType.PERSIST)

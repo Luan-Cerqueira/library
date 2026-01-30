@@ -2,6 +2,7 @@ package dev.luanc.library.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,18 +15,33 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Book {
+
     @Id
+    @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String isbn;
+
+    @Column(nullable = false, length = 100)
     private String title;
+
+    @Column(nullable = false, length = 13)
+    private String isbn;
+
+    @Column(nullable = false, length = 20)
     private String language;
+
+    @Column(name = "publication_date", nullable = false)
     private LocalDate publicationDate;
+
+    @Column(name = "print_length", nullable = false)
     private short printLenght;
 
     @CreationTimestamp
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @ManyToOne
@@ -47,4 +63,10 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private Set<Author> authors;
+
+    public void addPublisher(Publisher publisher){
+        if(this.publisher == null){
+            this.publisher = publisher;
+        }
+    }
 }

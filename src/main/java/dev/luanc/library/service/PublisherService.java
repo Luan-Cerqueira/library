@@ -1,5 +1,6 @@
 package dev.luanc.library.service;
 
+import dev.luanc.library.dto.publisher.publisherRequest;
 import dev.luanc.library.model.Publisher;
 import dev.luanc.library.repository.PublisherRepository;
 import lombok.AllArgsConstructor;
@@ -12,17 +13,20 @@ import java.util.List;
 public class PublisherService {
     private final PublisherRepository publisherRepository;
 
-    public Publisher addPublisher(Publisher publisher){
-        return publisherRepository.save(publisher);
+    public Publisher addPublisher(publisherRequest publisherReq){
+        Publisher newPublisher = new Publisher();
+        newPublisher.setName(publisherReq.name());
+        newPublisher.setCountry(publisherReq.country());
+        return publisherRepository.save(newPublisher);
     }
-    public Publisher updatePublisher(int id, Publisher publisher){
+    public Publisher updatePublisher(int id, publisherRequest publisherReq){
         Publisher updatedPublisher = publisherRepository
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Publisher not found"));
         updatedPublisher.setName(
-                publisher.getName() != null ? publisher.getName() : updatedPublisher.getName());
+                publisherReq.name() != null ? publisherReq.name() : updatedPublisher.getName());
         updatedPublisher.setCountry(
-                publisher.getCountry() != null ? publisher.getCountry() : updatedPublisher.getCountry());
+                publisherReq.country() != null ? publisherReq.country() : updatedPublisher.getCountry());
         return publisherRepository.save(updatedPublisher);
     }
     public List<Publisher> getAllPublishers(){

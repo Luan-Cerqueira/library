@@ -16,12 +16,20 @@ public class Loan {
 
     @Id
     @Column(name = "loan_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate loanDate;
+    @Column(name = "loan_date", nullable = false)
+    private LocalDate loanDate = LocalDate.now();
+
+    @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
+
+    @Column(name = "return_date", nullable = false)
     private LocalDate returnDate;
-    private LoanStatus loanStatus = LoanStatus.ACTIVE;
+
+    @Column( nullable = false)
+    private LoanStatus status = LoanStatus.ACTIVE;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

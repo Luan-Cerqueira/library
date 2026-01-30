@@ -1,5 +1,6 @@
 package dev.luanc.library.service;
 
+import dev.luanc.library.dto.author.authorRequest;
 import dev.luanc.library.model.Author;
 import dev.luanc.library.repository.AuthorRepository;
 import lombok.AllArgsConstructor;
@@ -12,16 +13,19 @@ import java.util.List;
 public class AuthorService {
     private final AuthorRepository authorRepository;
 
-    public Author addAuthor(Author author) {
-        return authorRepository.save(author);
+    public Author addAuthor(authorRequest authorReq) {
+        Author newAuthor = new Author();
+        newAuthor.setName(authorReq.name());
+        newAuthor.setNacionality(authorReq.nacionality());
+        return authorRepository.save(newAuthor);
     }
 
-    public Author updateAuthor(int id, Author author) {
+    public Author updateAuthor(int id, authorRequest authorReq) {
         Author updatedAuthor = authorRepository
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Author not found"));
-        updatedAuthor.setName(author.getName() != null ? author.getName() : updatedAuthor.getName());
-        updatedAuthor.setNacionality(author.getNacionality() != null ? author.getNacionality() : updatedAuthor.getNacionality());
+        updatedAuthor.setName(authorReq.name() != null ? authorReq.name() : updatedAuthor.getName());
+        updatedAuthor.setNacionality(authorReq.nacionality() != null ? authorReq.nacionality() : updatedAuthor.getNacionality());
         return authorRepository.save(updatedAuthor);
     }
 
