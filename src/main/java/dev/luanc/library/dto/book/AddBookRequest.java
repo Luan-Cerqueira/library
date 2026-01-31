@@ -1,8 +1,6 @@
 package dev.luanc.library.dto.book;
 
-import dev.luanc.library.model.Author;
-import dev.luanc.library.model.Genre;
-import dev.luanc.library.model.Publisher;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -11,10 +9,10 @@ public record AddBookRequest(
         String title,
         String isbn,
         String language,
-        LocalDate publicationDate,
-        short printLenght,
-        Publisher publisher,
-        Set<Genre> genres,
-        Set<Author> authors
+        @JsonFormat(pattern = "dd/MM/yyyy") LocalDate publicationDate,
+        short printLength,
+        String publisher,
+        Set<String> genres,
+        Set<String> authors
 ) {
 }

@@ -1,18 +1,18 @@
 package dev.luanc.library.mapper;
 
-import dev.luanc.library.dto.book.AddBookRequest;
+import dev.luanc.library.dto.book.AddBookToEntity;
 import dev.luanc.library.dto.book.AddBookResponse;
 import dev.luanc.library.model.Book;
 
 public class BookMapper {
 
-    public static Book toEntity(AddBookRequest bookReq){
+    public static Book toEntity(AddBookToEntity bookReq){
         return Book.builder()
                 .title(bookReq.title())
                 .isbn(bookReq.isbn())
                 .language(bookReq.language())
                 .publicationDate(bookReq.publicationDate())
-                .printLenght(bookReq.printLenght())
+                .printLength(bookReq.printLength())
                 .publisher(bookReq.publisher())
                 .authors(bookReq.authors())
                 .genres(bookReq.genres())
@@ -25,7 +25,7 @@ public class BookMapper {
                 book.getIsbn(),
                 book.getLanguage(),
                 book.getPublicationDate(),
-                book.getPrintLenght()
+                book.getPrintLength()
         );
     }
 }

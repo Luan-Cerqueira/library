@@ -1,6 +1,7 @@
 package dev.luanc.library.service;
 
-import dev.luanc.library.dto.publisher.publisherRequest;
+import dev.luanc.library.dto.publisher.PublisherDTO;
+import dev.luanc.library.mapper.PublisherMapper;
 import dev.luanc.library.model.Publisher;
 import dev.luanc.library.repository.PublisherRepository;
 import lombok.AllArgsConstructor;
@@ -13,13 +14,12 @@ import java.util.List;
 public class PublisherService {
     private final PublisherRepository publisherRepository;
 
-    public Publisher addPublisher(publisherRequest publisherReq){
-        Publisher newPublisher = new Publisher();
-        newPublisher.setName(publisherReq.name());
-        newPublisher.setCountry(publisherReq.country());
-        return publisherRepository.save(newPublisher);
+    public PublisherDTO addPublisher(PublisherDTO publisherReq) {
+        Publisher publisher = publisherRepository.save(PublisherMapper.toEntity(publisherReq));
+        return PublisherMapper.toPublisherDTO(publisher);
     }
-    public Publisher updatePublisher(int id, publisherRequest publisherReq){
+
+    public PublisherDTO updatePublisher(int id, PublisherDTO publisherReq) {
         Publisher updatedPublisher = publisherRepository
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Publisher not found"));
@@ -27,13 +27,16 @@ public class PublisherService {
                 publisherReq.name() != null ? publisherReq.name() : updatedPublisher.getName());
         updatedPublisher.setCountry(
                 publisherReq.country() != null ? publisherReq.country() : updatedPublisher.getCountry());
-        return publisherRepository.save(updatedPublisher);
+        return PublisherMapper.toPublisherDTO(publisherRepository.save(updatedPublisher));
     }
-    public List<Publisher> getAllPublishers(){
+
+    public List<Publisher> getAllPublishers() {
         return publisherRepository.findAll();
     }
-    public Publisher getPublisherById(int id){
-        return publisherRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Publisher not found"));
+
+    public PublisherDTO getPublisherById(int id) {
+        return PublisherMapper.
+                toPublisherDTO(publisherRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Publisher not found")));
     }
 }

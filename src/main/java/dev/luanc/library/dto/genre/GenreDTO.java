@@ -1,6 +1,6 @@
 package dev.luanc.library.dto.genre;
 
-public record genreRequest(
+public record GenreDTO(
         String name
 ) {
 }

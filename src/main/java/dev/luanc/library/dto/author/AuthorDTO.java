@@ -1,6 +1,6 @@
 package dev.luanc.library.dto.author;
 
-public record authorRequest(
+public record AuthorDTO(
         String name,
         String nacionality) {
 }

@@ -1,10 +1,7 @@
 package dev.luanc.library.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -12,15 +9,19 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Data
+@Table(name = "tb_book")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Book {
 
     @Id
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false, length = 100)
@@ -36,11 +37,12 @@ public class Book {
     private LocalDate publicationDate;
 
     @Column(name = "print_length", nullable = false)
-    private short printLenght;
+    private short printLength;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+    @CreationTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
@@ -54,6 +56,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
+    @ToString.Exclude
     private Set<Genre> genres;
 
     @ManyToMany()
@@ -62,11 +65,8 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+    @ToString.Exclude
     private Set<Author> authors;
-
-    public void addPublisher(Publisher publisher){
-        if(this.publisher == null){
-            this.publisher = publisher;
-        }
-    }
 }
+
+

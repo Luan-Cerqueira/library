@@ -1,21 +1,24 @@
 package dev.luanc.library.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
-@Data
-@AllArgsConstructor
+@Table(name = "tb_author")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Author {
 
     @Id
     @Column(name = "author_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private int id;
 
     @Column(name = "author_name", nullable = false, unique = true)
@@ -25,5 +28,6 @@ public class Author {
     private String nacionality;
 
     @ManyToMany(mappedBy = "authors", cascade = CascadeType.PERSIST)
+    @ToString.Exclude
     private Set<Book> books;
 }
