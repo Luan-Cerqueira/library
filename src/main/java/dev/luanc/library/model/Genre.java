@@ -17,7 +17,7 @@ public class Genre {
     @Column(name = "genre_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private int id;
+    private Integer id;
 
     @Column(name = "genre_name", nullable = false, length = 20, unique = true)
     private String name;

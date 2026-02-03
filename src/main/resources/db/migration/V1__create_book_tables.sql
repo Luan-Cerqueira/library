@@ -6,7 +6,7 @@ CREATE TABLE tb_publisher (
 
 CREATE TABLE tb_book (
     book_id SERIAL PRIMARY KEY,
-    publisher_id SERIAL NOT NULL,
+    publisher_id INTEGER NOT NULL,
     isbn VARCHAR(13) NOT NULL,
     title VARCHAR(100) NOT NULL,
     language VARCHAR(20) NOT NULL,
@@ -24,8 +24,8 @@ CREATE TABLE tb_author (
 );
 
 CREATE TABLE book_author (
-    book_id SERIAL REFERENCES tb_book(book_id),
-    author_id SERIAL REFERENCES tb_author(author_id),
+    book_id INTEGER REFERENCES tb_book(book_id),
+    author_id INTEGER REFERENCES tb_author(author_id),
     PRIMARY KEY (book_id, author_id)
 );
 
@@ -35,18 +35,18 @@ CREATE TABLE tb_genre (
 );
 
 CREATE TABLE book_genre (
-    book_id SERIAL REFERENCES tb_book(book_id),
-    genre_id SERIAL REFERENCES tb_genre(genre_id),
+    book_id INTEGER REFERENCES tb_book(book_id),
+    genre_id INTEGER REFERENCES tb_genre(genre_id),
     PRIMARY KEY (book_id, genre_id)
 );
 
-CREATE TYPE book_copy_status AS ENUM ('AVAILABLE', 'NOT AVAILABLE', 'DAMAGED');
-
 CREATE TABLE book_copy (
     book_copy_id SERIAL PRIMARY KEY,
-    book_id SERIAL,
-    asset_tag VARCHAR(20) NOT NULL,
-    status book_copy_status NOT NULL,
+    book_id INTEGER,
+    asset_tag VARCHAR(14) NOT NULL UNIQUE,
+    status VARCHAR(20) NOT NULL DEFAULT 'AVAILABLE',
+    copy_number SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (book_id) REFERENCES tb_book(book_id)
 )

@@ -36,8 +36,8 @@ public class Book {
     @Column(name = "publication_date", nullable = false)
     private LocalDate publicationDate;
 
-    @Column(name = "print_length", nullable = false)
-    private short printLength;
+    @Column(name = "print_length", nullable = false, columnDefinition = "SMALLINT")
+    private Short printLength;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)

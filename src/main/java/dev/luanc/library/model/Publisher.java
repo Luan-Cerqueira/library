@@ -17,7 +17,7 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "publisher_id")
     @EqualsAndHashCode.Include
-    private int id;
+    private Integer id;
 
     @Column(name = "publisher_name", nullable = false, length = 120, unique = true)
     private String name;
