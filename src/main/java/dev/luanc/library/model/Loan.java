@@ -3,6 +3,7 @@ package dev.luanc.library.model;
 import dev.luanc.library.model.enums.LoanStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Loan {
 
     @Id
@@ -21,15 +23,17 @@ public class Loan {
     private Long id;
 
     @Column(name = "loan_date", nullable = false)
+    @Builder.Default
     private LocalDate loanDate = LocalDate.now();
 
     @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
 
-    @Column(name = "return_date", nullable = false)
+    @Column(name = "return_date")
     private LocalDate returnDate;
 
     @Column( nullable = false)
+    @Builder.Default
     private LoanStatus status = LoanStatus.ACTIVE;
 
     @ManyToOne

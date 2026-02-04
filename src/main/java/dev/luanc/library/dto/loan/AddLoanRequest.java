@@ -1,14 +1,12 @@
 package dev.luanc.library.dto.loan;
 
-import dev.luanc.library.model.BookCopy;
-import dev.luanc.library.model.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
 public record AddLoanRequest(
-        User user,
-        BookCopy bookCopy,
-        LocalDate loanDate,
-        LocalDate dueDate
+        String userEmail,
+        String assetTag,
+        @JsonFormat(pattern = "dd/MM/yyyy") LocalDate loanDate
 ) {
 }

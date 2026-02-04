@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
 
@@ -15,4 +17,6 @@ public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
 
     @Query(value = "SELECT MAX(bc.copyNumber) FROM BookCopy bc WHERE bc.book.title = :title")
     Integer findLastCopyNumberByTitle(String title);
+
+    Optional<BookCopy> findBookCopyByAssetTag(String assetTag);
 }
