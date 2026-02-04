@@ -1,6 +1,6 @@
 package dev.luanc.library.dto.user;
 
-public record addUserResponse(
+public record UserResponse(
         String name,
         String email,
         String CPF

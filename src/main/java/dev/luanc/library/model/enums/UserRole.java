@@ -1,20 +1,8 @@
 package dev.luanc.library.model.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum UserRole {
-    ADMIN("ADMIN"),
-    USER("USER");
-
-    private String role;
-
-    UserRole(String role){
-        this.role = role;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+    ADMIN, USER
 }

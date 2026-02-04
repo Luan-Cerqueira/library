@@ -33,6 +33,7 @@ public class BookCopy {
     private String assetTag;
 
     @Column(nullable = false)
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private BookCopyStatus status = BookCopyStatus.AVAILABLE;
 
