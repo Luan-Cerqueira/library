@@ -2,16 +2,13 @@ package dev.luanc.library.dto.loan;
 
 import dev.luanc.library.model.BookCopy;
 import dev.luanc.library.model.User;
-import dev.luanc.library.model.enums.LoanStatus;
 
 import java.time.LocalDate;
 
-public record AddLoanResponse(
+public record LoanToEntity(
         User user,
-        String bookCopy,
-        String bookTitle,
+        BookCopy bookCopy,
         LocalDate loanDate,
-        LocalDate dueDate,
-        LoanStatus status
+        LocalDate dueDate
 ) {
 }

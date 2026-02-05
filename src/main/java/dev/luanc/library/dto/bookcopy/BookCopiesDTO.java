@@ -1,9 +1,11 @@
 package dev.luanc.library.dto.bookcopy;
 
-public record ListBookCopies(
+import dev.luanc.library.model.enums.BookCopyStatus;
+
+public record BookCopiesDTO(
         String title,
         String assetTag,
         int copyNumber,
-        String status
+        BookCopyStatus status
 ) {
 }

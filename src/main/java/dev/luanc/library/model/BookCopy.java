@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +33,7 @@ public class BookCopy {
     private String assetTag;
 
     @Column(nullable = false)
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private BookCopyStatus status = BookCopyStatus.AVAILABLE;
 
@@ -41,7 +43,8 @@ public class BookCopy {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
-    @CreationTimestamp
+
+    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }

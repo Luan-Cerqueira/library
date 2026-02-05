@@ -2,7 +2,7 @@ package dev.luanc.library.service;
 
 import dev.luanc.library.dto.book.AddBookToEntity;
 import dev.luanc.library.dto.book.AddBookRequest;
-import dev.luanc.library.dto.book.AddBookResponse;
+import dev.luanc.library.dto.book.BookResponse;
 import dev.luanc.library.mapper.BookMapper;
 import dev.luanc.library.model.Author;
 import dev.luanc.library.model.Book;
@@ -29,7 +29,7 @@ public class BookService {
     private final GenreRepository genreRepository;
 
 
-    public AddBookResponse addBook(AddBookRequest bookReq) {
+    public BookResponse addBook(AddBookRequest bookReq) {
         Publisher publisher = publisherRepository
                 .findByName(bookReq.publisher())
                 .orElseThrow(() -> new RuntimeException("Publisher not found"));
@@ -57,14 +57,14 @@ public class BookService {
         return BookMapper.toResponse(bookR);
     }
 
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<BookResponse> getAllBooks() {
+        return BookMapper.toResponseList(bookRepository.findAll());
     }
 
-    public Book getBookById(Long id) {
-        return bookRepository
-                .findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+    public BookResponse getBookById(Long id) {
+        return BookMapper
+                .toResponse(bookRepository
+                        .findById(id)
+                        .orElseThrow(() -> new RuntimeException("Book not found")));
     }
-
 }

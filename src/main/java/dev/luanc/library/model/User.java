@@ -4,9 +4,11 @@ import dev.luanc.library.model.enums.UserRole;
 import dev.luanc.library.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User {
 
     @Id
@@ -35,14 +38,20 @@ public class User {
     private String CPF;
 
     @Column(nullable = false)
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
     private UserStatus status = UserStatus.ACTIVE;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @Column(nullable = false)
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.USER;
 }

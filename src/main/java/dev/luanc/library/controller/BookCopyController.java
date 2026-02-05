@@ -2,6 +2,7 @@ package dev.luanc.library.controller;
 
 import dev.luanc.library.dto.bookcopy.AddBookCopyRequest;
 import dev.luanc.library.dto.bookcopy.AddBookCopyResponse;
+import dev.luanc.library.dto.bookcopy.BookCopiesDTO;
 import dev.luanc.library.model.BookCopy;
 import dev.luanc.library.service.BookCopyService;
 import lombok.AllArgsConstructor;
@@ -22,13 +23,13 @@ public class BookCopyController {
         return new ResponseEntity<>(bookCopyService.addBookCopy(bookCopyReq), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<List<BookCopy>> getBookCopies(){
-        return new ResponseEntity<>(bookCopyService.getBookCopies(), HttpStatus.OK);
+    @GetMapping({"/book/{id}"})
+    public ResponseEntity<List<BookCopiesDTO>> getBookCopiesByTitle(@PathVariable Long id){
+        return new ResponseEntity<>(bookCopyService.getBookCopiesByBookTitle(id), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<BookCopy> getBookCopiesById(@PathVariable Long id){
+    public ResponseEntity<BookCopiesDTO> getBookCopiesById(@PathVariable Long id){
         return new ResponseEntity<>(bookCopyService.getBookCopyById(id), HttpStatus.OK);
     }
 }
