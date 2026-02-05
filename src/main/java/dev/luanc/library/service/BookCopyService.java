@@ -2,10 +2,13 @@ package dev.luanc.library.service;
 
 import dev.luanc.library.dto.bookcopy.AddBookCopyRequest;
 import dev.luanc.library.dto.bookcopy.AddBookCopyResponse;
+import dev.luanc.library.dto.bookcopy.BookCopiesDTO;
+import dev.luanc.library.mapper.BookCopyMapper;
 import dev.luanc.library.model.Book;
 import dev.luanc.library.model.BookCopy;
 import dev.luanc.library.repository.BookCopyRepository;
 import dev.luanc.library.repository.BookRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,7 @@ public class BookCopyService {
     private BookCopyRepository bookCopyRepository;
     private BookRepository bookRepository;
 
+    @Transactional
     public AddBookCopyResponse addBookCopy(AddBookCopyRequest bookCopyReq) {
         Book book = bookRepository.findBookByTitle(bookCopyReq.bookName())
                 .orElseThrow(() -> new RuntimeException("Book not found"));
@@ -47,17 +51,20 @@ public class BookCopyService {
             nextCopy++;
             nextNumber++;
         }
-        AddBookCopyResponse bookRes = new AddBookCopyResponse(book, assetTags);
+        AddBookCopyResponse bookRes = new AddBookCopyResponse(book.getTitle(), assetTags);
         bookCopyRepository.saveAll(newCopies);
         return bookRes;
     }
 
-    public List<BookCopy> getBookCopies(){
-        return bookCopyRepository.findAll();
+    public List<BookCopiesDTO> getBookCopiesByBookTitle(Long id) {
+        return BookCopyMapper.toBookCopiesList
+                (bookCopyRepository
+                        .getBookCopyByBookId(id));
     }
 
-    public BookCopy getBookCopyById(Long id){
-        return bookCopyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book Copy Not Found"));
+    public BookCopiesDTO getBookCopyById(Long id) {
+        return BookCopyMapper.toBookCopiesDTO
+                (bookCopyRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Book Copy Not Found")));
     }
 }

@@ -5,7 +5,7 @@ import dev.luanc.library.model.Book;
 import java.util.List;
 
 public record AddBookCopyResponse(
-        Book book,
+        String bookTitle,
         List<String> assetTag
 ) {
 }
