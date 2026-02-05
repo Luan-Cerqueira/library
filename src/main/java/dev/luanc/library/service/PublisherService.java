@@ -30,8 +30,8 @@ public class PublisherService {
         return PublisherMapper.toPublisherDTO(publisherRepository.save(updatedPublisher));
     }
 
-    public List<Publisher> getAllPublishers() {
-        return publisherRepository.findAll();
+    public List<PublisherDTO> getAllPublishers() {
+        return PublisherMapper.toPublisherDTOList(publisherRepository.findAll());
     }
 
     public PublisherDTO getPublisherById(int id) {

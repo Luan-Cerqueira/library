@@ -8,6 +8,7 @@ import dev.luanc.library.model.BookCopy;
 import dev.luanc.library.model.Loan;
 import dev.luanc.library.model.User;
 import dev.luanc.library.model.enums.BookCopyStatus;
+import dev.luanc.library.model.enums.UserStatus;
 import dev.luanc.library.repository.BookCopyRepository;
 import dev.luanc.library.repository.LoanRepository;
 import dev.luanc.library.repository.UserRepository;
@@ -28,10 +29,15 @@ public class LoanService {
     public AddLoanResponse addLoan(AddLoanRequest loanReq) {
         User user = userRepository.findUserByEmail(
                 loanReq.userEmail()).orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getStatus() != UserStatus.ACTIVE) {
+            throw new RuntimeException("User " + user.getStatus());
+        }
+
         BookCopy bc = bookCopyRepository
                 .findBookCopyByAssetTag(loanReq.assetTag()).orElseThrow(() -> new RuntimeException("Book copy not found"));
 
-        if(bc.getStatus() != BookCopyStatus.AVAILABLE){
+        if (bc.getStatus() != BookCopyStatus.AVAILABLE) {
             throw new RuntimeException("Book copy not available");
         }
 

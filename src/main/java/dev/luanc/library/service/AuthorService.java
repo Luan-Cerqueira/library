@@ -29,8 +29,8 @@ public class AuthorService {
         return AuthorMapper.toAuthorDTO(authorRepository.save(updatedAuthor));
     }
 
-    public List<Author> getAllAuthors() {
-        return authorRepository.findAll();
+    public List<AuthorDTO> getAllAuthors() {
+        return AuthorMapper.toAuthorDTOList(authorRepository.findAll());
     }
 
     public AuthorDTO getAuthorById(int id) {

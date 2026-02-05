@@ -30,7 +30,7 @@ public class PublisherController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Publisher>> getAllPublishers() {
+    public ResponseEntity<List<PublisherDTO>> getAllPublishers() {
         return new ResponseEntity<>(publisherService.getAllPublishers(), HttpStatus.OK);
     }
 
