@@ -1,8 +1,10 @@
 package dev.luanc.library.mapper;
 
 import dev.luanc.library.dto.book.AddBookToEntity;
-import dev.luanc.library.dto.book.AddBookResponse;
+import dev.luanc.library.dto.book.BookResponse;
 import dev.luanc.library.model.Book;
+
+import java.util.List;
 
 public class BookMapper {
 
@@ -19,13 +21,19 @@ public class BookMapper {
                 .build();
     }
 
-    public static AddBookResponse toResponse(Book book){
-        return new AddBookResponse(
+    public static BookResponse toResponse(Book book){
+        return new BookResponse(
                 book.getTitle(),
                 book.getIsbn(),
                 book.getLanguage(),
                 book.getPublicationDate(),
                 book.getPrintLength()
         );
+    }
+
+    public static List<BookResponse> toResponseList(List<Book> books) {
+        return books.stream()
+                .map(BookMapper::toResponse)
+                .toList();
     }
 }
