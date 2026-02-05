@@ -1,6 +1,8 @@
 package dev.luanc.library.service;
 
 import dev.luanc.library.dto.genre.GenreDTO;
+import dev.luanc.library.dto.genre.GenreResponse;
+import dev.luanc.library.mapper.GenreMapper;
 import dev.luanc.library.model.Genre;
 import dev.luanc.library.repository.GenreRepository;
 import lombok.AllArgsConstructor;
@@ -27,14 +29,15 @@ public class GenreService {
         return genreRepository.save(updatedGenre);
     }
 
-    public List<Genre> getAllGenres() {
-        return genreRepository.findAll();
+    public List<GenreResponse> getAllGenres() {
+        return GenreMapper.toResponseList(genreRepository.findAll());
     }
 
-    public Genre getGenreById(int id) {
-        return genreRepository
-                .findById(id)
-                .orElseThrow(() -> new RuntimeException("Genre not found"));
+    public GenreResponse getGenreById(int id) {
+        return GenreMapper
+                .toResponse(genreRepository
+                        .findById(id)
+                        .orElseThrow(() -> new RuntimeException("Genre not found")));
     }
 
 }

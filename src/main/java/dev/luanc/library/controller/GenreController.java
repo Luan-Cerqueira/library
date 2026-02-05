@@ -1,6 +1,7 @@
 package dev.luanc.library.controller;
 
 import dev.luanc.library.dto.genre.GenreDTO;
+import dev.luanc.library.dto.genre.GenreResponse;
 import dev.luanc.library.dto.publisher.PublisherDTO;
 import dev.luanc.library.model.Genre;
 import dev.luanc.library.model.Publisher;
@@ -26,14 +27,13 @@ public class GenreController {
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<GenreDTO> getGenre(@PathVariable Integer id) {
-        Genre genre = genreService.getGenreById(id);
-        GenreDTO genreRes = new GenreDTO(genre.getName());
-        return new ResponseEntity<>(genreRes, HttpStatus.OK);
+    public ResponseEntity<GenreResponse> getGenre(@PathVariable Integer id) {
+        GenreResponse genre = genreService.getGenreById(id);
+        return new ResponseEntity<>(genre, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Genre>> getAllGenres() {
+    public ResponseEntity<List<GenreResponse>> getAllGenres() {
         return new ResponseEntity<>(genreService.getAllGenres(), HttpStatus.OK);
     }
 
