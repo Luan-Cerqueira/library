@@ -3,17 +3,22 @@ package dev.luanc.library.service;
 import dev.luanc.library.dto.loan.AddLoanRequest;
 import dev.luanc.library.dto.loan.LoanResponse;
 import dev.luanc.library.dto.loan.LoanToEntity;
-import dev.luanc.library.dto.loan.UpdateLoanReturnDate;
+import dev.luanc.library.dto.loan.UpdateLoan;
+import dev.luanc.library.mapper.InfractionMapper;
 import dev.luanc.library.mapper.LoanMapper;
 import dev.luanc.library.model.BookCopy;
+import dev.luanc.library.model.Infraction;
 import dev.luanc.library.model.Loan;
 import dev.luanc.library.model.User;
 import dev.luanc.library.model.enums.BookCopyStatus;
+import dev.luanc.library.model.enums.InfractionReason;
 import dev.luanc.library.model.enums.LoanStatus;
 import dev.luanc.library.model.enums.UserStatus;
 import dev.luanc.library.repository.BookCopyRepository;
+import dev.luanc.library.repository.InfractionRepository;
 import dev.luanc.library.repository.LoanRepository;
 import dev.luanc.library.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +32,7 @@ public class LoanService {
     private LoanRepository loanRepository;
     private UserRepository userRepository;
     private BookCopyRepository bookCopyRepository;
+    private InfractionRepository infractionRepository;
 
     public LoanResponse addLoan(AddLoanRequest loanReq) {
         User user = userRepository
@@ -63,15 +69,39 @@ public class LoanService {
                         .orElseThrow(() -> new RuntimeException("Loan not found")));
     }
 
-    public LoanResponse updateLoanById(Long id, UpdateLoanReturnDate returnDate){
+    @Transactional
+    public LoanResponse updateLoanById(Long id, UpdateLoan updateLoan) {
         Loan loan = loanRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Loan not found"));
-        switch (loan.getStatus()){
-            case RETURNED -> throw new RuntimeException("Loan already returned");
-            //case OVERDUE -> loan.getUser().setOcorre
+
+        if (loan.getStatus() == LoanStatus.RETURNED) {
+            throw new RuntimeException("Loan already returned");
         }
-        loan.setReturnDate(returnDate.returnDate());
+
+        if (updateLoan.infractionReason() != null) {
+            infractionRepository.save(InfractionMapper.toEntity(
+                            loan.getUser(),
+                            loan,
+                            updateLoan.returnDate(),
+                            updateLoan.infractionReason())
+            );
+        }
+
+        if (updateLoan.infractionReason() != null){
+            switch (updateLoan.infractionReason()){
+                case OVERDUE: loan.getBookCopy().setStatus(BookCopyStatus.AVAILABLE); break;
+                case LOST: loan.getBookCopy().setStatus(BookCopyStatus.NOT_AVAILABLE); break;
+                case DAMAGED: loan.getBookCopy().setStatus(BookCopyStatus.DAMAGED); break;
+            }
+        }
+
+        if(infractionRepository.countInfractionByUser(loan.getUser()) >= 3){
+            loan.getUser().setStatus(UserStatus.BLOCKED);
+        }
+
+        loan.setReturnDate(updateLoan.returnDate());
         loan.setStatus(LoanStatus.RETURNED);
+
 
         return LoanMapper.toResponse(loanRepository.save(loan));
     }

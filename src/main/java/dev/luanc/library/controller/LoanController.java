@@ -1,17 +1,14 @@
 package dev.luanc.library.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import dev.luanc.library.dto.loan.AddLoanRequest;
 import dev.luanc.library.dto.loan.LoanResponse;
-import dev.luanc.library.dto.loan.UpdateLoanReturnDate;
-import dev.luanc.library.model.Loan;
+import dev.luanc.library.dto.loan.UpdateLoan;
 import dev.luanc.library.service.LoanService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -37,7 +34,7 @@ public class LoanController {
 
     @PutMapping({"/{id}"})
     public ResponseEntity<LoanResponse> updateLoanById(@PathVariable Long id,
-                                                       @RequestBody UpdateLoanReturnDate updateLoanReq){
+                                                       @RequestBody UpdateLoan updateLoanReq){
 
         return new ResponseEntity<>(loanService.updateLoanById(id, updateLoanReq), HttpStatus.OK);
     }
