@@ -1,7 +1,9 @@
 package dev.luanc.library.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import dev.luanc.library.dto.loan.AddLoanRequest;
-import dev.luanc.library.dto.loan.AddLoanResponse;
+import dev.luanc.library.dto.loan.LoanResponse;
+import dev.luanc.library.dto.loan.UpdateLoanReturnDate;
 import dev.luanc.library.model.Loan;
 import dev.luanc.library.service.LoanService;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -18,17 +21,24 @@ public class LoanController {
     private LoanService loanService;
 
     @PostMapping
-    public ResponseEntity<AddLoanResponse> addLoan(@RequestBody AddLoanRequest loanReq) {
+    public ResponseEntity<LoanResponse> addLoan(@RequestBody AddLoanRequest loanReq) {
         return new ResponseEntity<>(loanService.addLoan(loanReq), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Loan>> getAllLoans() {
+    public ResponseEntity<List<LoanResponse>> getAllLoans() {
         return new ResponseEntity<>(loanService.getAllLoans(), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<AddLoanResponse> getLoanById(@PathVariable Long id) {
+    public ResponseEntity<LoanResponse> getLoanById(@PathVariable Long id) {
         return new ResponseEntity<>(loanService.getLoanById(id), HttpStatus.OK);
+    }
+
+    @PutMapping({"/{id}"})
+    public ResponseEntity<LoanResponse> updateLoanById(@PathVariable Long id,
+                                                       @RequestBody UpdateLoanReturnDate updateLoanReq){
+
+        return new ResponseEntity<>(loanService.updateLoanById(id, updateLoanReq), HttpStatus.OK);
     }
 }
