@@ -1,11 +1,12 @@
 package dev.luanc.library.service;
 
-import dev.luanc.library.dto.user.UserRequest;
+import dev.luanc.library.dto.user.RegisterUserRequest;
 import dev.luanc.library.dto.user.UserResponse;
 import dev.luanc.library.mapper.UserMapper;
 import dev.luanc.library.model.User;
 import dev.luanc.library.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,15 +14,17 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserResponse addUser(UserRequest userReq) {
+    public UserResponse addUser(RegisterUserRequest userReq) {
         if (userRepository.existsUserByEmail(userReq.email())) {
             throw new RuntimeException("Email already in use");
         }
-        // change plaintext password
-        User user = userRepository.save(UserMapper.toEntity(userReq));
 
-        return UserMapper.toResponse(user);
+        User user = UserMapper.toEntity(userReq);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return UserMapper.toResponse(userRepository.save(user));
     }
 
     public UserResponse getUserByEmail(String email) {
@@ -30,7 +33,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found")));
     }
 
-    public UserResponse updateUser(String email, UserRequest userReq) {
+    public UserResponse updateUser(String email, RegisterUserRequest userReq) {
         User updatedUser = userRepository.findUserByEmail(
                 email).orElseThrow(() -> new RuntimeException("User not found"));
         updatedUser.setName(userReq.name() != null ? userReq.name() : updatedUser.getName());
