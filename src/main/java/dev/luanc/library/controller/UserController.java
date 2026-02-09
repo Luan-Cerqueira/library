@@ -1,6 +1,6 @@
 package dev.luanc.library.controller;
 
-import dev.luanc.library.dto.user.UserRequest;
+import dev.luanc.library.dto.user.RegisterUserRequest;
 import dev.luanc.library.dto.user.UserResponse;
 import dev.luanc.library.service.UserService;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponse> addUser(@RequestBody UserRequest userReq) {
+    public ResponseEntity<UserResponse> addUser(@RequestBody RegisterUserRequest userReq) {
         return new ResponseEntity<>(userService.addUser(userReq), HttpStatus.CREATED);
     }
 
@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserResponse> updateUser(@RequestParam String email, @RequestBody UserRequest userReq) {
+    public ResponseEntity<UserResponse> updateUser(@RequestParam String email, @RequestBody RegisterUserRequest userReq) {
         return new ResponseEntity<>(userService.updateUser(email, userReq), HttpStatus.OK);
     }
 
