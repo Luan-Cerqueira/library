@@ -7,11 +7,9 @@ import dev.luanc.library.dto.loan.UpdateLoan;
 import dev.luanc.library.mapper.InfractionMapper;
 import dev.luanc.library.mapper.LoanMapper;
 import dev.luanc.library.model.BookCopy;
-import dev.luanc.library.model.Infraction;
 import dev.luanc.library.model.Loan;
 import dev.luanc.library.model.User;
 import dev.luanc.library.model.enums.BookCopyStatus;
-import dev.luanc.library.model.enums.InfractionReason;
 import dev.luanc.library.model.enums.LoanStatus;
 import dev.luanc.library.model.enums.UserStatus;
 import dev.luanc.library.repository.BookCopyRepository;
@@ -22,7 +20,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -51,7 +49,7 @@ public class LoanService {
             throw new RuntimeException("Book copy not available");
         }
 
-        LocalDate loanDate = loanReq.loanDate() != null ? loanReq.loanDate() : LocalDate.now();
+        LocalDateTime loanDate = loanReq.loanDate() != null ? loanReq.loanDate() : LocalDateTime.now();
 
         LoanToEntity loan = new LoanToEntity(user, bc, loanDate, loanDate.plusDays(14));
         bc.setStatus(BookCopyStatus.NOT_AVAILABLE);
@@ -63,14 +61,14 @@ public class LoanService {
         return LoanMapper.toResponseList(loanRepository.findAll());
     }
 
-    public LoanResponse getLoanById(Long id) {
+    public LoanResponse getLoanById(Integer id) {
         return LoanMapper.toResponse(
                 loanRepository.findById(id)
                         .orElseThrow(() -> new RuntimeException("Loan not found")));
     }
 
     @Transactional
-    public LoanResponse updateLoanById(Long id, UpdateLoan updateLoan) {
+    public LoanResponse updateLoanById(Integer id, UpdateLoan updateLoan) {
         Loan loan = loanRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Loan not found"));
 

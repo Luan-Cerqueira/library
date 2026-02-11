@@ -23,7 +23,7 @@ public class BookCopy {
     @Id
     @Column(name = "book_copy_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
@@ -38,7 +38,7 @@ public class BookCopy {
     private BookCopyStatus status = BookCopyStatus.AVAILABLE;
 
     @Column(name = "copy_number", columnDefinition = "SMALLINT", nullable = false)
-    private Integer copyNumber;
+    private Short copyNumber;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)

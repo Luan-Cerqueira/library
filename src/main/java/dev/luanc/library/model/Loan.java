@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_loan")
@@ -20,19 +21,20 @@ public class Loan {
     @Id
     @Column(name = "loan_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "loan_date", nullable = false)
     @Builder.Default
-    private LocalDate loanDate = LocalDate.now();
+    private LocalDateTime loanDate = LocalDateTime.now();
 
     @Column(name = "due_date", nullable = false)
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
 
     @Column(name = "return_date")
-    private LocalDate returnDate;
+    private LocalDateTime returnDate;
 
     @Column( nullable = false)
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     private LoanStatus status = LoanStatus.ACTIVE;
 

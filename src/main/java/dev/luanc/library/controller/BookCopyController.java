@@ -24,12 +24,12 @@ public class BookCopyController {
     }
 
     @GetMapping({"/book/{id}"})
-    public ResponseEntity<List<BookCopiesDTO>> getBookCopiesByTitle(@PathVariable Long id){
+    public ResponseEntity<List<BookCopiesDTO>> getBookCopiesByTitle(@PathVariable Integer id){
         return new ResponseEntity<>(bookCopyService.getBookCopiesByBookTitle(id), HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<BookCopiesDTO> getBookCopiesById(@PathVariable Long id){
+    public ResponseEntity<BookCopiesDTO> getBookCopiesById(@PathVariable Integer id){
         return new ResponseEntity<>(bookCopyService.getBookCopyById(id), HttpStatus.OK);
     }
 }

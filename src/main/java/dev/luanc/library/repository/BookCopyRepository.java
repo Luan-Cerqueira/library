@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
+public interface BookCopyRepository extends JpaRepository<BookCopy, Integer> {
 
     @Query(value = "SELECT MAX(CAST(SUBSTR(asset_tag, 10, 5) AS INTEGER))" +
             "FROM book_copy WHERE asset_tag LIKE %:year%", nativeQuery = true)
     Integer findLastSequenceByYear(@Param("year") int year);
 
     @Query(value = "SELECT MAX(bc.copyNumber) FROM BookCopy bc WHERE bc.book.title = :title")
-    Integer findLastCopyNumberByTitle(String title);
+    Short findLastCopyNumberByTitle(String title);
 
-    List<BookCopy> getBookCopyByBookId(Long id);
+    List<BookCopy> getBookCopyByBookId(Integer id);
 
     Optional<BookCopy> findBookCopyByAssetTag(String assetTag);
 }

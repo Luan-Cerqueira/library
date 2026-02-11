@@ -61,7 +61,7 @@ public class BookService {
         return BookMapper.toResponseList(bookRepository.findAll());
     }
 
-    public BookResponse getBookById(Long id) {
+    public BookResponse getBookById(Integer id) {
         return BookMapper
                 .toResponse(bookRepository
                         .findById(id)
