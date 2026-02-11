@@ -28,12 +28,12 @@ public class LoanController {
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<LoanResponse> getLoanById(@PathVariable Long id) {
+    public ResponseEntity<LoanResponse> getLoanById(@PathVariable Integer id) {
         return new ResponseEntity<>(loanService.getLoanById(id), HttpStatus.OK);
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<LoanResponse> updateLoanById(@PathVariable Long id,
+    public ResponseEntity<LoanResponse> updateLoanById(@PathVariable Integer id,
                                                        @RequestBody UpdateLoan updateLoanReq) {
 
         return new ResponseEntity<>(loanService.updateLoanById(id, updateLoanReq), HttpStatus.OK);

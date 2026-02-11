@@ -31,8 +31,8 @@ public class BookCopyService {
         Integer lastSequence = bookCopyRepository.findLastSequenceByYear(currentYear);
         int nextNumber = (lastSequence == null) ? 1 : lastSequence + 1;
 
-        Integer lastCopy = bookCopyRepository.findLastCopyNumberByTitle(book.getTitle());
-        int nextCopy = (lastCopy == null) ? 1 : lastCopy + 1;
+        Short lastCopy = bookCopyRepository.findLastCopyNumberByTitle(book.getTitle());
+        short nextCopy = (lastCopy == null) ? 1 : (short) (lastCopy + 1);
 
         List<BookCopy> newCopies = new ArrayList<>();
         List<String> assetTags = new ArrayList<>();
@@ -56,13 +56,13 @@ public class BookCopyService {
         return bookRes;
     }
 
-    public List<BookCopiesDTO> getBookCopiesByBookTitle(Long id) {
+    public List<BookCopiesDTO> getBookCopiesByBookTitle(Integer id) {
         return BookCopyMapper.toBookCopiesList
                 (bookCopyRepository
                         .getBookCopyByBookId(id));
     }
 
-    public BookCopiesDTO getBookCopyById(Long id) {
+    public BookCopiesDTO getBookCopyById(Integer id) {
         return BookCopyMapper.toBookCopiesDTO
                 (bookCopyRepository.findById(id)
                         .orElseThrow(() -> new RuntimeException("Book Copy Not Found")));

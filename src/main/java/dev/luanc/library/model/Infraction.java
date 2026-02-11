@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_infraction")
@@ -21,10 +21,10 @@ public class Infraction {
     @Id
     @Column(name = "infraction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "occurrence_date", nullable = false)
-    private LocalDate occurrence_date = LocalDate.now();
+    private LocalDateTime occurrence_date = LocalDateTime.now();
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
