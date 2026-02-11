@@ -32,7 +32,7 @@ public class LoanController {
         return new ResponseEntity<>(loanService.getLoanById(id), HttpStatus.OK);
     }
 
-    @PutMapping({"/{id}"})
+    @PatchMapping({"/{id}/return"})
     public ResponseEntity<LoanResponse> updateLoanById(@PathVariable Integer id,
                                                        @RequestBody UpdateLoan updateLoanReq) {
 
