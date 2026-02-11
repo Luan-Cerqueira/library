@@ -76,11 +76,13 @@ public class LoanService {
             throw new RuntimeException("Loan already returned");
         }
 
+        LocalDateTime returnDate = (updateLoan.returnDate() == null ? LocalDateTime.now():updateLoan.returnDate());
+
         if (updateLoan.infractionReason() != null) {
             infractionRepository.save(InfractionMapper.toEntity(
                             loan.getUser(),
                             loan,
-                            updateLoan.returnDate(),
+                            returnDate,
                             updateLoan.infractionReason())
             );
         }
@@ -97,7 +99,7 @@ public class LoanService {
             loan.getUser().setStatus(UserStatus.BLOCKED);
         }
 
-        loan.setReturnDate(updateLoan.returnDate());
+        loan.setReturnDate(returnDate);
         loan.setStatus(LoanStatus.RETURNED);
 
 
