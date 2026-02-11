@@ -21,9 +21,33 @@ public class SecurityConfig {
 
     private final SecurityFilter securityFilter;
 
-    public SecurityConfig(SecurityFilter securityFilter) {
+    public SecurityConfig(SecurityFilter securityFilter){
         this.securityFilter = securityFilter;
     }
+
+    public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_POST = {
+            "/api/v1/auth/**",
+    };
+
+    public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_GET = {
+            "/api/v1/genres/**",
+            "/api/v1/publishers/**",
+            "/api/v1/authors/**",
+            "/api/v1/books/**",
+            "/api/v1/copies/**"
+    };
+    public static final String [] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
+            "/api/v1/users/me/**"
+    };
+
+    public static final String [] ENDPOINTS_ADMIN = {
+            "/api/v1/books/**",
+            "/api/v1/loans/**",
+            "/api/v1/genres/**",
+            "/api/v1/authors/**",
+            "/api/v1/copies/**",
+            "api/v1/publishers/**"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,9 +57,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_POST).permitAll()
+                        .requestMatchers(HttpMethod.GET, ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_GET).permitAll()
+                        .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN")
+                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
+                        .anyRequest().denyAll()
                 ).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
