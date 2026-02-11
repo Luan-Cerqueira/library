@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/copies")
+@RequestMapping("/api/v1/copies")
 @AllArgsConstructor
 public class BookCopyController {
     private BookCopyService bookCopyService;

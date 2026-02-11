@@ -27,12 +27,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizedHeader = request.getHeader("Authorization");
-        System.out.println(authorizedHeader);
         if (Strings.isNotEmpty(authorizedHeader) && authorizedHeader.startsWith("Bearer ")) {
             String token = authorizedHeader.substring("Bearer ".length());
-            System.out.println(token);
             var login = tokenConfig.validateToken(token);
-            System.out.println(login);
 
             if (login != null) {
                 User user = userRepository.findUserByEmail(login).orElseThrow(() -> new UsernameNotFoundException(login));

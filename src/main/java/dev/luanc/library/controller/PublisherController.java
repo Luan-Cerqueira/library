@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/publishers")
+@RequestMapping("/api/v1/publishers")
 @AllArgsConstructor
 public class PublisherController {
     private PublisherService publisherService;

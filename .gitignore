@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Environment ###
+.env
+Dockerfile
+docker-compose.yml
+.env.example

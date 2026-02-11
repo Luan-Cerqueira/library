@@ -105,4 +105,8 @@ public class LoanService {
 
         return LoanMapper.toResponse(loanRepository.save(loan));
     }
+
+    public List<LoanResponse> getLoanByUserEmail(String email){
+        return LoanMapper.toResponseList(loanRepository.findLoanByUserEmail(email));
+    }
 }
