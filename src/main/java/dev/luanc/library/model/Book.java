@@ -23,7 +23,7 @@ public class Book {
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, length = 100)
     private String title;
