@@ -1,9 +1,9 @@
 package dev.luanc.library.dto.user;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 
 public record LoginRequest(
-    @NotEmpty(message = "Email is required") String email,
-    @NotEmpty(message = "Password is required") String password
+    @NotBlank(message = "email: Is required") String email,
+    @NotBlank(message = "password: Is required") String password
 ) {
 }

@@ -1,6 +1,7 @@
 package dev.luanc.library.service;
 
 import dev.luanc.library.dto.publisher.PublisherDTO;
+import dev.luanc.library.exception.ResourceNotFoundException;
 import dev.luanc.library.mapper.PublisherMapper;
 import dev.luanc.library.model.Publisher;
 import dev.luanc.library.repository.PublisherRepository;
@@ -22,7 +23,7 @@ public class PublisherService {
     public PublisherDTO updatePublisher(int id, PublisherDTO publisherReq) {
         Publisher updatedPublisher = publisherRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Publisher not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Publisher not found"));
         updatedPublisher.setName(
                 publisherReq.name() != null ? publisherReq.name() : updatedPublisher.getName());
         updatedPublisher.setCountry(
@@ -37,6 +38,6 @@ public class PublisherService {
     public PublisherDTO getPublisherById(int id) {
         return PublisherMapper.
                 toPublisherDTO(publisherRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Publisher not found")));
+                        .orElseThrow(() -> new ResourceNotFoundException("Publisher not found")));
     }
 }

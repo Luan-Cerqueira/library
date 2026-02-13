@@ -5,6 +5,7 @@ import dev.luanc.library.dto.bookcopy.AddBookCopyResponse;
 import dev.luanc.library.dto.bookcopy.BookCopiesDTO;
 import dev.luanc.library.model.BookCopy;
 import dev.luanc.library.service.BookCopyService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class BookCopyController {
     private BookCopyService bookCopyService;
 
     @PostMapping
-    public ResponseEntity<AddBookCopyResponse> addBookCopy(@RequestBody AddBookCopyRequest bookCopyReq){
+    public ResponseEntity<AddBookCopyResponse> addBookCopy(@Valid @RequestBody AddBookCopyRequest bookCopyReq){
         return new ResponseEntity<>(bookCopyService.addBookCopy(bookCopyReq), HttpStatus.CREATED);
     }
 

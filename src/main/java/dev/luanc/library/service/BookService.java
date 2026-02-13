@@ -3,6 +3,7 @@ package dev.luanc.library.service;
 import dev.luanc.library.dto.book.AddBookToEntity;
 import dev.luanc.library.dto.book.AddBookRequest;
 import dev.luanc.library.dto.book.BookResponse;
+import dev.luanc.library.exception.ResourceNotFoundException;
 import dev.luanc.library.mapper.BookMapper;
 import dev.luanc.library.model.Author;
 import dev.luanc.library.model.Book;
@@ -32,16 +33,16 @@ public class BookService {
     public BookResponse addBook(AddBookRequest bookReq) {
         Publisher publisher = publisherRepository
                 .findByName(bookReq.publisher())
-                .orElseThrow(() -> new RuntimeException("Publisher not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Publisher not found"));
         Set<Genre> genres = new HashSet<>();
         for (String g : bookReq.genres()) {
             genres.add(genreRepository.findGenreByName(g)
-                    .orElseThrow(() -> new RuntimeException("Genre not found")));
+                    .orElseThrow(() -> new ResourceNotFoundException("Genre not found")));
         }
         Set<Author> authors = new HashSet<>();
         for (String a : bookReq.authors()) {
             authors.add(authorRepository.findAuthorByName(a)
-                    .orElseThrow(() -> new RuntimeException("Author not found")));
+                    .orElseThrow(() -> new ResourceNotFoundException("Author not found")));
         }
         AddBookToEntity book = new AddBookToEntity(
                 bookReq.title(),
@@ -65,6 +66,6 @@ public class BookService {
         return BookMapper
                 .toResponse(bookRepository
                         .findById(id)
-                        .orElseThrow(() -> new RuntimeException("Book not found")));
+                        .orElseThrow(() -> new ResourceNotFoundException("Book not found")));
     }
 }

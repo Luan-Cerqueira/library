@@ -3,6 +3,7 @@ package dev.luanc.library.controller;
 import dev.luanc.library.dto.author.AuthorDTO;
 import dev.luanc.library.model.Author;
 import dev.luanc.library.service.AuthorService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class AuthorController {
     private AuthorService authorService;
 
     @PostMapping
-    public ResponseEntity<AuthorDTO> addAuthor(@RequestBody AuthorDTO authorReq) {
+    public ResponseEntity<AuthorDTO> addAuthor(@Valid @RequestBody AuthorDTO authorReq) {
         AuthorDTO authorRes = authorService.addAuthor(authorReq);
         return new ResponseEntity<>(authorRes, HttpStatus.CREATED);
     }
@@ -35,7 +36,7 @@ public class AuthorController {
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Integer id, @RequestBody AuthorDTO authorDTO) {
+    public ResponseEntity<AuthorDTO> updateAuthor(@Valid @PathVariable Integer id, @RequestBody AuthorDTO authorDTO) {
         return new ResponseEntity<>(authorService.updateAuthor(id, authorDTO), HttpStatus.OK);
     }
 }

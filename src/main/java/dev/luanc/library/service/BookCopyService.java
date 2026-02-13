@@ -3,6 +3,7 @@ package dev.luanc.library.service;
 import dev.luanc.library.dto.bookcopy.AddBookCopyRequest;
 import dev.luanc.library.dto.bookcopy.AddBookCopyResponse;
 import dev.luanc.library.dto.bookcopy.BookCopiesDTO;
+import dev.luanc.library.exception.ResourceNotFoundException;
 import dev.luanc.library.mapper.BookCopyMapper;
 import dev.luanc.library.model.Book;
 import dev.luanc.library.model.BookCopy;
@@ -25,7 +26,7 @@ public class BookCopyService {
     @Transactional
     public AddBookCopyResponse addBookCopy(AddBookCopyRequest bookCopyReq) {
         Book book = bookRepository.findBookByTitle(bookCopyReq.bookName())
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found"));
 
         int currentYear = LocalDate.now().getYear();
         Integer lastSequence = bookCopyRepository.findLastSequenceByYear(currentYear);
@@ -65,6 +66,6 @@ public class BookCopyService {
     public BookCopiesDTO getBookCopyById(Integer id) {
         return BookCopyMapper.toBookCopiesDTO
                 (bookCopyRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Book Copy Not Found")));
+                        .orElseThrow(() -> new ResourceNotFoundException("Book Copy Not Found")));
     }
 }

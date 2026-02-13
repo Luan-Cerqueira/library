@@ -4,6 +4,7 @@ import dev.luanc.library.dto.book.AddBookRequest;
 import dev.luanc.library.dto.book.BookResponse;
 import dev.luanc.library.model.Book;
 import dev.luanc.library.service.BookService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public ResponseEntity<BookResponse> addBook(@RequestBody AddBookRequest bookReq) {
+    public ResponseEntity<BookResponse> addBook(@Valid @RequestBody AddBookRequest bookReq) {
         return new ResponseEntity<>(bookService.addBook(bookReq), HttpStatus.CREATED);
     }
 
