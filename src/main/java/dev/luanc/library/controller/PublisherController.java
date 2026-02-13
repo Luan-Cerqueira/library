@@ -4,6 +4,7 @@ import dev.luanc.library.dto.author.AuthorDTO;
 import dev.luanc.library.dto.publisher.PublisherDTO;
 import dev.luanc.library.model.Publisher;
 import dev.luanc.library.service.PublisherService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class PublisherController {
     private PublisherService publisherService;
 
     @PostMapping
-    public ResponseEntity<PublisherDTO> addPublisher(@RequestBody PublisherDTO publisherDTO) {
+    public ResponseEntity<PublisherDTO> addPublisher(@Valid @RequestBody PublisherDTO publisherDTO) {
         PublisherDTO publisher = publisherService.addPublisher(publisherDTO);
         return new ResponseEntity<>(publisher, HttpStatus.CREATED);
     }
@@ -35,7 +36,7 @@ public class PublisherController {
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<PublisherDTO> updatePublisher(@PathVariable Integer id, @RequestBody PublisherDTO publisherDTO) {
+    public ResponseEntity<PublisherDTO> updatePublisher(@Valid @PathVariable Integer id, @RequestBody PublisherDTO publisherDTO) {
         return new ResponseEntity<>(publisherService.updatePublisher(id, publisherDTO), HttpStatus.OK);
     }
 }

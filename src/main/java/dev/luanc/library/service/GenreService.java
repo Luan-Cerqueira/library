@@ -2,6 +2,7 @@ package dev.luanc.library.service;
 
 import dev.luanc.library.dto.genre.GenreDTO;
 import dev.luanc.library.dto.genre.GenreResponse;
+import dev.luanc.library.exception.ResourceNotFoundException;
 import dev.luanc.library.mapper.GenreMapper;
 import dev.luanc.library.model.Genre;
 import dev.luanc.library.repository.GenreRepository;
@@ -24,7 +25,7 @@ public class GenreService {
     public Genre updateGenre(int id, GenreDTO genre) {
         Genre updatedGenre = genreRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Genre not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Genre not found"));
         updatedGenre.setName(genre.name() != null ? genre.name() : updatedGenre.getName());
         return genreRepository.save(updatedGenre);
     }
@@ -37,7 +38,7 @@ public class GenreService {
         return GenreMapper
                 .toResponse(genreRepository
                         .findById(id)
-                        .orElseThrow(() -> new RuntimeException("Genre not found")));
+                        .orElseThrow(() -> new ResourceNotFoundException("Genre not found")));
     }
 
 }

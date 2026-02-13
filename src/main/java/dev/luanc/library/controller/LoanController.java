@@ -4,6 +4,7 @@ import dev.luanc.library.dto.loan.AddLoanRequest;
 import dev.luanc.library.dto.loan.LoanResponse;
 import dev.luanc.library.dto.loan.UpdateLoan;
 import dev.luanc.library.service.LoanService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class LoanController {
     private LoanService loanService;
 
     @PostMapping
-    public ResponseEntity<LoanResponse> addLoan(@RequestBody AddLoanRequest loanReq) {
+    public ResponseEntity<LoanResponse> addLoan(@Valid @RequestBody AddLoanRequest loanReq) {
         return new ResponseEntity<>(loanService.addLoan(loanReq), HttpStatus.CREATED);
     }
 

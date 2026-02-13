@@ -4,6 +4,10 @@ import dev.luanc.library.dto.loan.AddLoanRequest;
 import dev.luanc.library.dto.loan.LoanResponse;
 import dev.luanc.library.dto.loan.LoanToEntity;
 import dev.luanc.library.dto.loan.UpdateLoan;
+import dev.luanc.library.exception.BookCopyNotAvailableException;
+import dev.luanc.library.exception.LoanReturnedException;
+import dev.luanc.library.exception.ResourceNotFoundException;
+import dev.luanc.library.exception.UserNotActiveException;
 import dev.luanc.library.mapper.InfractionMapper;
 import dev.luanc.library.mapper.LoanMapper;
 import dev.luanc.library.model.BookCopy;
@@ -35,18 +39,18 @@ public class LoanService {
     public LoanResponse addLoan(AddLoanRequest loanReq) {
         User user = userRepository
                 .findUserByEmail(
-                        loanReq.userEmail()).orElseThrow(() -> new RuntimeException("User not found"));
+                        loanReq.userEmail()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         if (user.getStatus() != UserStatus.ACTIVE) {
-            throw new RuntimeException("User " + user.getStatus());
+            throw new UserNotActiveException("User " + user.getStatus());
         }
 
         BookCopy bc = bookCopyRepository
                 .findBookCopyByAssetTag(
-                        loanReq.assetTag()).orElseThrow(() -> new RuntimeException("Book copy not found"));
+                        loanReq.assetTag()).orElseThrow(() -> new ResourceNotFoundException("Book copy not found"));
 
         if (bc.getStatus() != BookCopyStatus.AVAILABLE) {
-            throw new RuntimeException("Book copy not available");
+            throw new BookCopyNotAvailableException("Book copy not available");
         }
 
         LocalDateTime loanDate = loanReq.loanDate() != null ? loanReq.loanDate() : LocalDateTime.now();
@@ -64,16 +68,16 @@ public class LoanService {
     public LoanResponse getLoanById(Integer id) {
         return LoanMapper.toResponse(
                 loanRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Loan not found")));
+                        .orElseThrow(() -> new ResourceNotFoundException("Loan not found")));
     }
 
     @Transactional
     public LoanResponse updateLoanById(Integer id, UpdateLoan updateLoan) {
         Loan loan = loanRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Loan not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Loan not found"));
 
         if (loan.getStatus() == LoanStatus.RETURNED) {
-            throw new RuntimeException("Loan already returned");
+            throw new LoanReturnedException("Loan already returned");
         }
 
         LocalDateTime returnDate = (updateLoan.returnDate() == null ? LocalDateTime.now():updateLoan.returnDate());
