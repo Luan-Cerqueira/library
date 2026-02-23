@@ -6,6 +6,7 @@ import dev.luanc.library.dto.publisher.PublisherDTO;
 import dev.luanc.library.model.Genre;
 import dev.luanc.library.model.Publisher;
 import dev.luanc.library.service.GenreService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/genres")
 @AllArgsConstructor
+@Tag(name = "Genre", description = "Genre Controller for genre management")
 public class GenreController {
     private GenreService genreService;
 

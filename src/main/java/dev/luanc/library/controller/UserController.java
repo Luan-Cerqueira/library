@@ -5,6 +5,7 @@ import dev.luanc.library.dto.user.RegisterUserRequest;
 import dev.luanc.library.dto.user.UserResponse;
 import dev.luanc.library.service.LoanService;
 import dev.luanc.library.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @AllArgsConstructor
+@Tag(name = "User", description = "User Controller for user management")
 public class UserController {
 
     private UserService userService;

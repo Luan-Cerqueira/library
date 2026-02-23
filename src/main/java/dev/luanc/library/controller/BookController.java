@@ -4,6 +4,7 @@ import dev.luanc.library.dto.book.AddBookRequest;
 import dev.luanc.library.dto.book.BookResponse;
 import dev.luanc.library.model.Book;
 import dev.luanc.library.service.BookService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/books")
 @AllArgsConstructor
+@Tag(name = "Book", description = "Book Controller for book management")
 public class BookController {
     private BookService bookService;
 

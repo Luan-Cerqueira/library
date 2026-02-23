@@ -3,6 +3,7 @@ package dev.luanc.library.controller;
 import dev.luanc.library.dto.author.AuthorDTO;
 import dev.luanc.library.model.Author;
 import dev.luanc.library.service.AuthorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/authors")
 @AllArgsConstructor
+@Tag(name = "Author", description = "Author Controller for author management")
 public class AuthorController {
 
     private AuthorService authorService;
