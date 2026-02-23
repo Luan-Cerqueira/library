@@ -2,6 +2,7 @@ package dev.luanc.library.service;
 
 import dev.luanc.library.dto.user.RegisterUserRequest;
 import dev.luanc.library.dto.user.UserResponse;
+import dev.luanc.library.exception.AlreadyExistsException;
 import dev.luanc.library.exception.ResourceNotFoundException;
 import dev.luanc.library.mapper.UserMapper;
 import dev.luanc.library.model.User;
@@ -19,7 +20,10 @@ public class UserService {
 
     public UserResponse addUser(RegisterUserRequest userReq) {
         if (userRepository.existsUserByEmail(userReq.email())) {
-            throw new ResourceNotFoundException("Email already in use");
+            throw new AlreadyExistsException("Email already in use");
+        }
+        if (userRepository.existsUserByCPF(userReq.CPF())) {
+            throw new AlreadyExistsException("CPF already in use");
         }
 
         User user = UserMapper.toEntity(userReq);
