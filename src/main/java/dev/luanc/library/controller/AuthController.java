@@ -7,6 +7,7 @@ import dev.luanc.library.dto.user.RegisterUserRequest;
 import dev.luanc.library.dto.user.UserResponse;
 import dev.luanc.library.model.User;
 import dev.luanc.library.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @AllArgsConstructor
+@Tag(name = "Auth Controller", description = "Authentication Controller for user registration and login")
 public class AuthController {
 
     private final UserService userService;
