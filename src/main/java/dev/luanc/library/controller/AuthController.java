@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @AllArgsConstructor
-@Tag(name = "Auth Controller", description = "Authentication Controller for user registration and login")
+@Tag(name = "Auth", description = "Authentication Controller for user registration and login")
 public class AuthController {
 
     private final UserService userService;

@@ -1,9 +1,8 @@
 package dev.luanc.library.controller;
 
-import dev.luanc.library.dto.author.AuthorDTO;
 import dev.luanc.library.dto.publisher.PublisherDTO;
-import dev.luanc.library.model.Publisher;
 import dev.luanc.library.service.PublisherService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/publishers")
 @AllArgsConstructor
+@Tag(name = "Publisher", description = "Publisher Controller for publisher management")
 public class PublisherController {
     private PublisherService publisherService;
 
