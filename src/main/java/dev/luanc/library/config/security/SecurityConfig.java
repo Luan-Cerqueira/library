@@ -1,5 +1,7 @@
 package dev.luanc.library.config.security;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.servlet.DispatcherType;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +27,8 @@ public class SecurityConfig {
         this.securityFilter = securityFilter;
     }
 
+    //public static final String SECURITY = "bearerAuth";
+
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_POST = {
             "/api/v1/auth/**",
     };
@@ -46,7 +50,7 @@ public class SecurityConfig {
             "/api/v1/genres/**",
             "/api/v1/authors/**",
             "/api/v1/copies/**",
-            "api/v1/publishers/**"
+            "/api/v1/publishers/**"
     };
 
     @Bean
@@ -59,6 +63,7 @@ public class SecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_POST).permitAll()
                         .requestMatchers(HttpMethod.GET, ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_GET).permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN")
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
                         .anyRequest().denyAll()

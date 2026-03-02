@@ -5,6 +5,7 @@ import dev.luanc.library.dto.bookcopy.AddBookCopyResponse;
 import dev.luanc.library.dto.bookcopy.BookCopiesDTO;
 import dev.luanc.library.model.BookCopy;
 import dev.luanc.library.service.BookCopyService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/copies")
 @AllArgsConstructor
+@Tag(name = "BookCopy", description = "BookCopy Controller for book copies management")
 public class BookCopyController {
     private BookCopyService bookCopyService;
 
