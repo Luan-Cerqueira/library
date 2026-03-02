@@ -6,6 +6,8 @@ import dev.luanc.library.dto.publisher.PublisherDTO;
 import dev.luanc.library.model.Genre;
 import dev.luanc.library.model.Publisher;
 import dev.luanc.library.service.GenreService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/genres")
+@RequestMapping("/api/v1/genres")
 @AllArgsConstructor
+@Tag(name = "Genre", description = "Genre Controller for genre management")
 public class GenreController {
     private GenreService genreService;
 
     @PostMapping
-    public ResponseEntity<GenreDTO> addGenre(@RequestBody GenreDTO genreDTO) {
+    public ResponseEntity<GenreDTO> addGenre(@Valid @RequestBody GenreDTO genreDTO) {
         Genre genre = genreService.addGenre(genreDTO);
         GenreDTO genreRes = new GenreDTO(genre.getName());
         return new ResponseEntity<>(genreRes, HttpStatus.CREATED);
@@ -38,7 +41,7 @@ public class GenreController {
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<GenreDTO> updateGenre(@PathVariable Integer id, @RequestBody GenreDTO genreDTO) {
+    public ResponseEntity<GenreDTO> updateGenre(@Valid @PathVariable Integer id, @RequestBody GenreDTO genreDTO) {
         Genre genre = genreService.updateGenre(id, genreDTO);
         GenreDTO genreRes = new GenreDTO(genre.getName());
         return new ResponseEntity<>(genreRes, HttpStatus.OK);

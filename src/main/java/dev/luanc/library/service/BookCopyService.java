@@ -3,6 +3,7 @@ package dev.luanc.library.service;
 import dev.luanc.library.dto.bookcopy.AddBookCopyRequest;
 import dev.luanc.library.dto.bookcopy.AddBookCopyResponse;
 import dev.luanc.library.dto.bookcopy.BookCopiesDTO;
+import dev.luanc.library.exception.ResourceNotFoundException;
 import dev.luanc.library.mapper.BookCopyMapper;
 import dev.luanc.library.model.Book;
 import dev.luanc.library.model.BookCopy;
@@ -25,14 +26,14 @@ public class BookCopyService {
     @Transactional
     public AddBookCopyResponse addBookCopy(AddBookCopyRequest bookCopyReq) {
         Book book = bookRepository.findBookByTitle(bookCopyReq.bookName())
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found"));
 
         int currentYear = LocalDate.now().getYear();
         Integer lastSequence = bookCopyRepository.findLastSequenceByYear(currentYear);
         int nextNumber = (lastSequence == null) ? 1 : lastSequence + 1;
 
-        Integer lastCopy = bookCopyRepository.findLastCopyNumberByTitle(book.getTitle());
-        int nextCopy = (lastCopy == null) ? 1 : lastCopy + 1;
+        Short lastCopy = bookCopyRepository.findLastCopyNumberByTitle(book.getTitle());
+        short nextCopy = (lastCopy == null) ? 1 : (short) (lastCopy + 1);
 
         List<BookCopy> newCopies = new ArrayList<>();
         List<String> assetTags = new ArrayList<>();
@@ -56,15 +57,15 @@ public class BookCopyService {
         return bookRes;
     }
 
-    public List<BookCopiesDTO> getBookCopiesByBookTitle(Long id) {
+    public List<BookCopiesDTO> getBookCopiesByBookTitle(Integer id) {
         return BookCopyMapper.toBookCopiesList
                 (bookCopyRepository
                         .getBookCopyByBookId(id));
     }
 
-    public BookCopiesDTO getBookCopyById(Long id) {
+    public BookCopiesDTO getBookCopyById(Integer id) {
         return BookCopyMapper.toBookCopiesDTO
                 (bookCopyRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Book Copy Not Found")));
+                        .orElseThrow(() -> new ResourceNotFoundException("Book Copy Not Found")));
     }
 }

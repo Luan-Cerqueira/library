@@ -4,11 +4,12 @@ import dev.luanc.library.model.BookCopy;
 import dev.luanc.library.model.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record LoanToEntity(
         User user,
         BookCopy bookCopy,
-        LocalDate loanDate,
-        LocalDate dueDate
+        LocalDateTime loanDate,
+        LocalDateTime dueDate
 ) {
 }

@@ -1,6 +1,7 @@
 package dev.luanc.library.service;
 
 import dev.luanc.library.dto.author.AuthorDTO;
+import dev.luanc.library.exception.ResourceNotFoundException;
 import dev.luanc.library.mapper.AuthorMapper;
 import dev.luanc.library.model.Author;
 import dev.luanc.library.repository.AuthorRepository;
@@ -22,7 +23,7 @@ public class AuthorService {
     public AuthorDTO updateAuthor(int id, AuthorDTO authorReq) {
         Author updatedAuthor = authorRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Author not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found"));
         updatedAuthor.setName(authorReq.name() != null ? authorReq.name() : updatedAuthor.getName());
         updatedAuthor.setNacionality(authorReq.nacionality() != null ? authorReq.nacionality() : updatedAuthor.getNacionality());
 
@@ -36,6 +37,6 @@ public class AuthorService {
     public AuthorDTO getAuthorById(int id) {
         return AuthorMapper.toAuthorDTO(authorRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Author not found")));
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found")));
     }
 }
