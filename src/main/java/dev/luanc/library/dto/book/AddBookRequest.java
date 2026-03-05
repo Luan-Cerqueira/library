@@ -3,6 +3,7 @@ package dev.luanc.library.dto.book;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
@@ -21,11 +22,11 @@ public record AddBookRequest(
         @Length(min = 1, max = 20, message = "language: Must be of 1 - 20 characters")
         String language,
 
-        @NotEmpty(message = "publicationDate: Is required")
+        @NotNull(message = "publicationDate: Is required")
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate publicationDate,
 
-        @NotEmpty(message = "printLength: Is required")
+        @NotNull(message = "printLength: Is required")
         short printLength,
 
         @NotBlank(message = "publisher: Is required")

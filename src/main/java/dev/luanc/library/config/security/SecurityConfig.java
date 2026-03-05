@@ -1,9 +1,6 @@
 package dev.luanc.library.config.security;
 
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.servlet.DispatcherType;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,8 +23,6 @@ public class SecurityConfig {
     public SecurityConfig(SecurityFilter securityFilter){
         this.securityFilter = securityFilter;
     }
-
-    //public static final String SECURITY = "bearerAuth";
 
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_POST = {
             "/api/v1/auth/**",

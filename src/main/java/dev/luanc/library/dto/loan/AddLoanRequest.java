@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record AddLoanRequest(
