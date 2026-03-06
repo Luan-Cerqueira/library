@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Luan-Cerqueira/library/compare/v1.0.1...v1.0.2) (2026-03-06)
+
+
+### Bug Fixes
+
+* consertado erro em que a devolucao de uma copia nao deixava a mesma available ([c3157af](https://github.com/Luan-Cerqueira/library/commit/c3157af513c85b286340787edda2c266a8d0b016))
+
 ## [1.0.1](https://github.com/Luan-Cerqueira/library/compare/v1.0.0...v1.0.1) (2026-03-05)
 
 
