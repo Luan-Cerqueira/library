@@ -28,44 +28,56 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         ErrorMessage errorBody = new ErrorMessage(LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.NOT_FOUND.value(),
                 request.getDescription(false),
                 ex.getMessage());
 
-        return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserNotActiveException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> userNotActiveException(UserNotActiveException ex, WebRequest request) {
         ErrorMessage errorBody = new ErrorMessage(LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.NOT_FOUND.value(),
                 request.getDescription(false),
                 ex.getMessage());
 
-        return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BookCopyNotAvailableException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
     public ResponseEntity<Object> bookCopyNotAvailableException(BookCopyNotAvailableException ex, WebRequest request) {
         ErrorMessage errorBody = new ErrorMessage(LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.CONFLICT.value(),
                 request.getDescription(false),
                 ex.getMessage());
 
-        return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorBody, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public ResponseEntity<Object> alreadyExistsException(AlreadyExistsException ex, WebRequest request) {
         ErrorMessage errorBody = new ErrorMessage(LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.CONFLICT.value(),
                 request.getDescription(false),
                 ex.getMessage());
 
-        return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorBody, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(LoanReturnedException.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    public ResponseEntity<Object> alreadyReturnedException(LoanReturnedException ex, WebRequest request) {
+        ErrorMessage errorBody = new ErrorMessage(LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                request.getDescription(false),
+                ex.getMessage());
+
+        return new ResponseEntity<>(errorBody, HttpStatus.CONFLICT);
+    }
+
 
 }

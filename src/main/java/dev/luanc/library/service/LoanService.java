@@ -82,6 +82,10 @@ public class LoanService {
 
         LocalDateTime returnDate = (updateLoan.returnDate() == null ? LocalDateTime.now():updateLoan.returnDate());
 
+        loan.getBookCopy().setStatus(BookCopyStatus.AVAILABLE);
+        loan.setReturnDate(returnDate);
+        loan.setStatus(LoanStatus.RETURNED);
+
         if (updateLoan.infractionReason() != null) {
             infractionRepository.save(InfractionMapper.toEntity(
                             loan.getUser(),
@@ -89,11 +93,8 @@ public class LoanService {
                             returnDate,
                             updateLoan.infractionReason())
             );
-        }
 
-        if (updateLoan.infractionReason() != null){
             switch (updateLoan.infractionReason()){
-                case OVERDUE: loan.getBookCopy().setStatus(BookCopyStatus.AVAILABLE); break;
                 case LOST: loan.getBookCopy().setStatus(BookCopyStatus.NOT_AVAILABLE); break;
                 case DAMAGED: loan.getBookCopy().setStatus(BookCopyStatus.DAMAGED); break;
             }
@@ -102,10 +103,6 @@ public class LoanService {
         if(infractionRepository.countInfractionByUser(loan.getUser()) >= 3){
             loan.getUser().setStatus(UserStatus.BLOCKED);
         }
-
-        loan.setReturnDate(returnDate);
-        loan.setStatus(LoanStatus.RETURNED);
-
 
         return LoanMapper.toResponse(loanRepository.save(loan));
     }
