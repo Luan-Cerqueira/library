@@ -303,5 +303,4 @@ Para esse projeto, tenho definidos algumas melhorias e implementações.
 - Testes unitários;
 - Testes de integração;
 - Criação de filtros (ex: buscar todos os livros para determinado gênero/autor/editora);
-- 
 
