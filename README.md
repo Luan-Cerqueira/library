@@ -1,15 +1,15 @@
-# My-Library API
-***
+# :books: My-Library API
 
 Este projeto é uma API backend que simula o fluxo de empréstimo de livros de uma biblioteca, indo do cadastro de livros/gêneros/editoras/usuários até empréstimos feitos pelos usuários. 
 
-## Status do Projeto
-***
+## :hammer: Status do Projeto
 
 > :construction: Projeto em construção :construction:
 
+Quero utilizar esse projeto para continuar estudando e me aprimorando, então pretendo aplicar novas tecnologias e conceitos ao longo do tempo.
+
 ## :hammer_and_wrench: Tecnologias utilizadas
-***
+
 - **Java 17, SpringBoot 3.5.10, SpringSecurity, JavaJWT**
 - **Maven 3.8.4**
 - **Postgres 16**
@@ -18,7 +18,6 @@ Este projeto é uma API backend que simula o fluxo de empréstimo de livros de u
 - **SwaggerAPI 2.7.0**
 
 ## :ballot_box_with_check: Funcionalidades
-***
 
 - Cadastro e listagem de editoras, gêneros, autores e livros.
 - Cadastro automático de copias de livros.
@@ -29,7 +28,6 @@ Este projeto é uma API backend que simula o fluxo de empréstimo de livros de u
 
 
 ## :open_file_folder: Arquitetura do Sistema
-***
 
 ```
 library/
@@ -60,7 +58,7 @@ Abaixo, descrevo como uma requisição (ex: registrar um empréstimo) navega pel
 #### 4. Mapper:
 - Uma camada auxiliar que transforma Entidades (Objetos que referenciam registros no banco de dados) em DTOs (resposta da API), garantindo que dados sensíveis não sejam expostos desnecessariamente.
 
-```
+``` mermaid
 sequenceDiagram
     participant U as Usuário/Frontend
     participant C as LoanController
@@ -90,7 +88,6 @@ sequenceDiagram
 ```
 
 ## :arrow_forward: Como Executar o Projeto
-***
 
 ### 1. Pré requisitos
 - Docker instalado
@@ -284,7 +281,7 @@ O administrador também pode detalhar se houve alguma infração no momento do r
 **Response Body**
 ![img.png](assets/3-user-get-me-loans.png)
 
-## Github Actions
+## :repeat: Github Actions
 
 No projeto está configurado um workflow de integração contínua e lançamento semântico. Cada etapa é dependente da anterior, então, se uma etapa falhar, a seguinte não irá acontecer.
 ![img.png](assets/9-workflow-pull-request.png)
@@ -299,4 +296,12 @@ A segunda etapa é responsável por fazer a construção da aplicação utilizan
 A terceira etapa é o lançamento semântico das versões da API, ficando responsável pelo rastreio de alterações(Breaking change, features, fixes) e a documentação dessas mudanças em [CHANGELOG.md](CHANGELOG.md).
 ![img.png](assets/10-workflow-push.png)
 
+## :rocket: Próximos passos
+
+Para esse projeto, tenho definidos algumas melhorias e implementações.
+
+- Testes unitários;
+- Testes de integração;
+- Criação de filtros (ex: buscar todos os livros para determinado gênero/autor/editora);
+- 
 
