@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/Luan-Cerqueira/library/compare/v1.0.2...v1.0.3) (2026-03-18)
+
+
+### Bug Fixes
+
+* adicionado default user admin ([e68db8e](https://github.com/Luan-Cerqueira/library/commit/e68db8e7161bbd09f9658c52e4afcb002a2c2a67))
+
 ## [1.0.2](https://github.com/Luan-Cerqueira/library/compare/v1.0.1...v1.0.2) (2026-03-06)
 
 
