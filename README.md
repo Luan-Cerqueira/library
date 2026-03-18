@@ -125,6 +125,25 @@ A documentação da API ficará disponível em ```localhost:8080/swagger-ui/inde
 
 O servidor ficará disponível em localhost:8080 (ou em outra porta que você tenha configurado).
 
+### 4. Administrador padrão
+
+O projeto possui um administrador padrão criado automaticamente com o flyway.
+
+```
+{
+  "email": "admin@adm.com",
+  "password": "senha"
+}
+```
+
+É possível criar outros administradores através dos containers, utilizando os comandos:
+```
+ docker exec -it library-db sh         # Para acessar o container
+ psql -U admin -d library_db           # Para acessar o db dentro do container
+ INSERT INTO tb_user(...) VALUES(...)  # Para adicionar um novo administrador
+```
+
+
 ## :desktop_computer: Demonstração de Funcionalidades
 
 ### Genre
